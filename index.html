@@ -11,9 +11,9 @@
             --client-name: "gionialmique.com";
             --client-domain: "gionialmique.com";
             --whatsapp-number: "19082575524";
-            --risk-level: "High Security Risk";
-            --risk-percent: 92%;
-            --blacklist-count: "20 blacklisted detected";
+            --risk-level: "Medium Security Risk";
+            --risk-percent: 65%;                  /* reduced from 92% */
+            --blacklist-count: "8 blacklisted detected";
             --ip-address: "23.227.38.66";
             --cdn: "CloudFlare";
             --platform: "cloudflare";
@@ -34,7 +34,7 @@
         }
 
         .urgent-banner {
-            background: #d9534f;
+            background: #f0ad4e;  /* orange – less urgent than red */
             color: white;
             text-align: center;
             padding: 12px;
@@ -99,6 +99,7 @@
         }
         .icon-red { color: #d9534f; }
         .icon-yellow { color: #f0ad4e; }
+        .icon-green { color: #5cb85c; }
 
         .btn-yellow {
             background: #f0ad4e;
@@ -140,7 +141,7 @@
         .meter-pointer {
             position: absolute;
             top: -12px;
-            left: var(--risk-percent, 92%);
+            left: var(--risk-percent, 65%);
             transform: translateX(-50%);
             width: 0;
             height: 0;
@@ -161,7 +162,7 @@
             text-align: left;
         }
 
-        /* Malware list (original summary) */
+        /* Malware list */
         .check-list {
             list-style: none;
             padding: 0;
@@ -181,30 +182,7 @@
         }
         .risk-high { color: #d9534f; }
         .risk-medium { color: #f0ad4e; }
-
-        /* Always-visible detailed explanations */
-        .issue-block {
-            margin-bottom: 24px;
-            padding-bottom: 16px;
-            border-bottom: 1px solid #edf2f7;
-        }
-        .issue-block:last-child {
-            border-bottom: none;
-        }
-        .issue-title {
-            font-weight: 800;
-            font-size: 1rem;
-            margin-bottom: 8px;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-        }
-        .issue-text {
-            font-size: 0.85rem;
-            color: #4a5568;
-            line-height: 1.5;
-            margin-top: 4px;
-        }
+        .risk-clean { color: #5cb85c; }
 
         /* Hardening section */
         .hardening-header {
@@ -254,6 +232,7 @@
         }
         .btn-pdf:hover { background: #1e2a3a; }
 
+        /* Print styles */
         @media print {
             .urgent-banner, .back-btn, .btn-full, .btn-yellow, .btn-pdf, .btn-whatsapp {
                 display: none;
@@ -297,7 +276,7 @@
 <body>
 
 <div class="urgent-banner">
-    <i class="fas fa-exclamation-triangle"></i> Security Alert: Action Required
+    <i class="fas fa-exclamation-triangle"></i> Security Update: Issues Remain
 </div>
 
 <div class="container">
@@ -317,10 +296,10 @@
             </div>
         </div>
         <div class="status-row">
-            <i class="fas fa-exclamation-triangle status-icon icon-red"></i>
+            <i class="fas fa-exclamation-triangle status-icon icon-yellow"></i>
             <div>
                 <h3>Site is blacklisted</h3>
-                <p id="blacklistCount">20 blacklisted detected</p>
+                <p id="blacklistCount">8 blacklisted detected</p>
             </div>
         </div>
         <a href="#" class="btn-yellow" id="requestReviewBtn">Request Review</a>
@@ -338,59 +317,9 @@
             <div class="meter-fill"></div>
             <div class="meter-pointer" id="meterPointer"></div>
         </div>
-        <div class="risk-label" id="riskLabel">High Security Risk</div>
+        <div class="risk-label" id="riskLabel">Medium Security Risk</div>
         <div class="risk-desc" id="riskDescription">
-            Our automated scan found several issues on some pages of your website. If you believe your website has been hacked, reach out to a <a href="#" class="specialist-link" id="specialistLink">specialist</a> for a complete scan and guaranteed malware removal.
-        </div>
-    </div>
-
-    <!-- DETAILED EXPLANATIONS – ALWAYS VISIBLE (no dropdowns) -->
-    <div class="card">
-        <h3 style="margin-bottom: 16px;">🔍 Detailed Security Findings</h3>
-
-        <div class="issue-block">
-            <div class="issue-title">
-                <i class="fas fa-ban icon-red"></i> Site Blacklisted – <span id="detailBlacklistCount">20 Blacklist Detections</span>
-            </div>
-            <div class="issue-text">
-                Your store has been flagged on multiple security blacklists. This is a serious concern because it directly impacts your store’s visibility. Search engines and traffic sources may block your site, which can explain why your store hasn’t been getting noticed, why traffic has dropped, and why potential customers may be unable to access your site.
-            </div>
-        </div>
-
-        <div class="issue-block">
-            <div class="issue-title">
-                <i class="fas fa-bug icon-red"></i> Malware Detected (High Risk)
-            </div>
-            <div class="issue-text">
-                Malware can compromise your customer data, disrupt store functionality, and give hackers access to sensitive information, including payment data. It can also cause your site to be flagged by browsers and security tools, driving customers away.
-            </div>
-        </div>
-
-        <div class="issue-block">
-            <div class="issue-title">
-                <i class="fas fa-envelope-open-text icon-yellow"></i> Injected Spam (Medium Risk)
-            </div>
-            <div class="issue-text">
-                Spam injections can harm your store’s reputation, cause emails from your domain to be marked as spam, and discourage customers from completing purchases. They often appear as hidden links or fake content that search engines penalize.
-            </div>
-        </div>
-
-        <div class="issue-block">
-            <div class="issue-title">
-                <i class="fas fa-paint-brush icon-red"></i> Defacements Detected (High Risk)
-            </div>
-            <div class="issue-text">
-                Hackers can alter your site’s appearance or content, scaring off visitors, damaging your brand credibility, and potentially leading to account suspensions. Defacements are often a sign of deeper unauthorized access.
-            </div>
-        </div>
-
-        <div class="issue-block">
-            <div class="issue-title">
-                <i class="fas fa-shield-alt icon-red"></i> Website Firewall – None Detected
-            </div>
-            <div class="issue-text">
-                Without a firewall, your store is unprotected against attacks. Hackers can exploit vulnerabilities more easily, which could result in unauthorized transactions, withdrawal of funds, or even a full site takeover.
-            </div>
+            Our automated scan found remaining issues on your website. Malware and blacklisting have been partially reduced. Continue remediation to fully secure your site. Reach out to a <a href="#" class="specialist-link" id="specialistLink">specialist</a> for complete cleanup.
         </div>
     </div>
 
@@ -399,12 +328,12 @@
         <ul class="check-list">
             <li><i class="fas fa-exclamation-circle icon-red"></i> malware detected by scan <span class="risk-badge risk-high">(High Risk)</span></li>
             <li><i class="fas fa-exclamation-triangle icon-yellow"></i> injected spam detected <span class="risk-badge risk-medium">(Medium Risk)</span></li>
-            <li><i class="fas fa-exclamation-circle icon-red"></i> defacements detected <span class="risk-badge risk-high">(High Risk)</span></li>
+            <li><i class="fas fa-check-circle icon-green"></i> defacements resolved <span class="risk-badge risk-clean">(Clean)</span></li>
         </ul>
         <div style="text-align: center; margin-top: 24px;">
-            <i class="fas fa-times-circle icon-red" style="font-size: 2.2rem; margin-bottom: 8px;"></i>
+            <i class="fas fa-shield-alt icon-green" style="font-size: 2.2rem; margin-bottom: 8px;"></i>
             <h3>Website Firewall</h3>
-            <p>No Firewall Detected</p>
+            <p>Web Application Firewall (WAF) Active</p>
         </div>
     </div>
 
@@ -440,25 +369,24 @@
 
 <script>
     (function() {
+        // ========== CONFIG – UPDATE FOR EACH CLIENT ==========
         const config = {
-            clientName: "agdblvck.com",
-            clientDomain: "agdblvck.com",
+            clientName: "gionialmique.com",
+            clientDomain: "gionialmique.com",
             whatsappNumber: "19082575524",
-            riskLevel: "High Security Risk",
-            riskPercent: 92,
-            blacklistCount: "20 blacklisted detected",
+            riskLevel: "Medium Security Risk",
+            riskPercent: 65,
+            blacklistCount: "8 blacklisted detected",
             ipAddress: "23.227.38.66",
             cdn: "CloudFlare",
             platform: "cloudflare",
-            redirectUrl: "https://https://agdblvck.com/"
+            redirectUrl: "https://gionialmique.com/"
         };
 
+        // Apply to DOM
         document.querySelectorAll('.client-name').forEach(el => el.textContent = config.clientName);
         const blacklistSpan = document.getElementById('blacklistCount');
         if (blacklistSpan) blacklistSpan.textContent = config.blacklistCount;
-        const detailBlacklistSpan = document.getElementById('detailBlacklistCount');
-        if (detailBlacklistSpan) detailBlacklistSpan.textContent = config.blacklistCount;
-
         const ipSpan = document.getElementById('ipAddress');
         if (ipSpan) ipSpan.textContent = config.ipAddress;
         const cdnSpan = document.getElementById('cdnValue');
