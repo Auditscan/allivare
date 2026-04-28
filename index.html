@@ -10,10 +10,10 @@
         :root {
             --client-name: "gionialmique.com";
             --client-domain: "gionialmique.com";
-            --whatsapp-number: "19082575524";
-            --risk-level: "Medium Security Risk";
-            --risk-percent: 65%;                  /* reduced from 92% */
-            --blacklist-count: "8 blacklisted detected";
+            --whatsapp-number: "19082575524";     /* only digits, no + or spaces */
+            --risk-level: "High Security Risk";
+            --risk-percent: 92%;
+            --blacklist-count: "20 blacklisted detected";
             --ip-address: "23.227.38.66";
             --cdn: "CloudFlare";
             --platform: "cloudflare";
@@ -34,7 +34,7 @@
         }
 
         .urgent-banner {
-            background: #f0ad4e;  /* orange – less urgent than red */
+            background: #d9534f;
             color: white;
             text-align: center;
             padding: 12px;
@@ -99,7 +99,6 @@
         }
         .icon-red { color: #d9534f; }
         .icon-yellow { color: #f0ad4e; }
-        .icon-green { color: #5cb85c; }
 
         .btn-yellow {
             background: #f0ad4e;
@@ -141,7 +140,7 @@
         .meter-pointer {
             position: absolute;
             top: -12px;
-            left: var(--risk-percent, 65%);
+            left: var(--risk-percent, 92%);
             transform: translateX(-50%);
             width: 0;
             height: 0;
@@ -182,7 +181,6 @@
         }
         .risk-high { color: #d9534f; }
         .risk-medium { color: #f0ad4e; }
-        .risk-clean { color: #5cb85c; }
 
         /* Hardening section */
         .hardening-header {
@@ -276,7 +274,7 @@
 <body>
 
 <div class="urgent-banner">
-    <i class="fas fa-exclamation-triangle"></i> Security Update: Issues Remain
+    <i class="fas fa-exclamation-triangle"></i> Security Alert: Action Required
 </div>
 
 <div class="container">
@@ -296,10 +294,10 @@
             </div>
         </div>
         <div class="status-row">
-            <i class="fas fa-exclamation-triangle status-icon icon-yellow"></i>
+            <i class="fas fa-exclamation-triangle status-icon icon-red"></i>
             <div>
                 <h3>Site is blacklisted</h3>
-                <p id="blacklistCount">8 blacklisted detected</p>
+                <p id="blacklistCount">20 blacklisted detected</p>
             </div>
         </div>
         <a href="#" class="btn-yellow" id="requestReviewBtn">Request Review</a>
@@ -317,9 +315,9 @@
             <div class="meter-fill"></div>
             <div class="meter-pointer" id="meterPointer"></div>
         </div>
-        <div class="risk-label" id="riskLabel">Medium Security Risk</div>
+        <div class="risk-label" id="riskLabel">High Security Risk</div>
         <div class="risk-desc" id="riskDescription">
-            Our automated scan found remaining issues on your website. Malware and blacklisting have been partially reduced. Continue remediation to fully secure your site. Reach out to a <a href="#" class="specialist-link" id="specialistLink">specialist</a> for complete cleanup.
+            Our automated scan found several issues on some pages of your website. If you believe your website has been hacked, reach out to a <a href="#" class="specialist-link" id="specialistLink">specialist</a> for a complete scan and guaranteed malware removal.
         </div>
     </div>
 
@@ -328,12 +326,12 @@
         <ul class="check-list">
             <li><i class="fas fa-exclamation-circle icon-red"></i> malware detected by scan <span class="risk-badge risk-high">(High Risk)</span></li>
             <li><i class="fas fa-exclamation-triangle icon-yellow"></i> injected spam detected <span class="risk-badge risk-medium">(Medium Risk)</span></li>
-            <li><i class="fas fa-check-circle icon-green"></i> defacements resolved <span class="risk-badge risk-clean">(Clean)</span></li>
+            <li><i class="fas fa-exclamation-circle icon-red"></i> defacements detected <span class="risk-badge risk-high">(High Risk)</span></li>
         </ul>
         <div style="text-align: center; margin-top: 24px;">
-            <i class="fas fa-shield-alt icon-green" style="font-size: 2.2rem; margin-bottom: 8px;"></i>
+            <i class="fas fa-times-circle icon-red" style="font-size: 2.2rem; margin-bottom: 8px;"></i>
             <h3>Website Firewall</h3>
-            <p>Web Application Firewall (WAF) Active</p>
+            <p>No Firewall Detected</p>
         </div>
     </div>
 
@@ -369,18 +367,18 @@
 
 <script>
     (function() {
-        // ========== CONFIG – UPDATE FOR EACH CLIENT ==========
+        // ========== CONFIG – CHANGE THESE FOR EACH CLIENT ==========
         const config = {
             clientName: "allivare.com",
             clientDomain: "allivare.com",
-            whatsappNumber: "19082575524",
-            riskLevel: "Medium Security Risk",
-            riskPercent: 65,
-            blacklistCount: "8 blacklisted detected",
+            whatsappNumber: "19082575524",        // digits only
+            riskLevel: "High Security Risk",
+            riskPercent: 92,                      // 0-100
+            blacklistCount: "20 blacklisted detected",
             ipAddress: "23.227.38.66",
             cdn: "CloudFlare",
             platform: "cloudflare",
-            redirectUrl: "https://allivare.com"
+            redirectUrl: "https://allivare.com/"
         };
 
         // Apply to DOM
@@ -399,16 +397,19 @@
         const riskLabelSpan = document.getElementById('riskLabel');
         if (riskLabelSpan) riskLabelSpan.textContent = config.riskLevel;
 
+        // Risk meter pointer position
         const pointer = document.getElementById('meterPointer');
         if (pointer) {
             const percent = Math.min(100, Math.max(0, config.riskPercent));
             pointer.style.left = percent + '%';
         }
 
+        // WhatsApp link generator
         function getWhatsAppLink() {
             return `https://wa.me/${config.whatsappNumber.replace(/\D/g, '')}`;
         }
 
+        // Update all WhatsApp buttons and links
         const whatsappElements = [
             document.getElementById('whatsappBackBtn'),
             document.getElementById('whatsappMainBtn'),
